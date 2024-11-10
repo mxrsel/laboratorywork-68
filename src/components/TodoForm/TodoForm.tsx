@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TodoMutation } from "../../types";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
-import { createTask } from "../../Tasks/tasksSlice";
+import { createTask } from "../Tasks/tasksSlice";
 
 const TodoForm = () => {
     const dispatch: AppDispatch = useDispatch();
@@ -18,11 +18,6 @@ const TodoForm = () => {
                 [name]: value
             }));
     };
-
-    const handleCheckout = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTask((prevState) => ({ ...prevState, status: e.target.checked }));
-    };
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         dispatch(createTask(task));
@@ -38,16 +33,6 @@ const TodoForm = () => {
                     required
                     value={task.name}
                     onChange={handleChange}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="name">Done</label>
-                <input
-                    type="checkbox"
-                    name="status"
-                    id="status"
-                    checked={task.status}
-                    onChange={handleCheckout}
                 />
             </div>
             <button className="btn btn-primary">Add Task</button>

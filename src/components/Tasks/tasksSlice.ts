@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {TaskList, Todo, TodoMutation} from "../types.ts";
-import axiosApi from "../axiosApi.ts";
+import {TaskList, Todo, TodoMutation} from "../../types.ts";
+import axiosApi from "../../axiosApi.ts";
 
 interface iTasksSlice {
     tasks: Todo[]
@@ -35,6 +35,22 @@ export const createTask = createAsyncThunk(
     }
 );
 
+export const updateTask = createAsyncThunk(
+    "tasks/updateTask",
+    async (task: Todo) => {
+        await axiosApi.put(`tasks/${task.id}.json`, task);
+        return task;
+    }
+);
+
+export const deleteTask = createAsyncThunk(
+    "tasks/deleteTask",
+    async (taskId: string) => {
+        await axiosApi.delete(`tasks/${taskId}.json`);
+        return taskId;
+    }
+);
+
 const tasksSlice = createSlice({
     name: "tasks",
     initialState,
@@ -59,6 +75,16 @@ const tasksSlice = createSlice({
             .addCase(createTask.fulfilled, (state, action) => {
                 state.tasks.push(action.payload);
             })
+            .addCase(updateTask.fulfilled, (state, action) => {
+                const index = state.tasks.findIndex((task) => task.id === action.payload.id);
+                if (index !== -2) {
+                    state.tasks[index] = action.payload;
+                }
+            })
+            .addCase(deleteTask.fulfilled, (state, action) => {
+                state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+            });
+
     }
 });
 

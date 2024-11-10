@@ -14,6 +14,7 @@ const Tasks = () => {
 
     return (
         <div>
+            <h1 className='text-center mt-5'>Tasks List</h1>
             {tasks.map((task) => (
                 <TasksItem key={task.id} tasks={task} />
             ))}

@@ -5,9 +5,9 @@ const App = () => {
 
 
     return (
-        <div>
-            <Tasks />
+        <div className='mt-3'>
             <TodoForm />
+            <Tasks />
         </div>
     );
 };

@@ -33,9 +33,10 @@ const TodoForm = () => {
                     required
                     value={task.name}
                     onChange={handleChange}
+                    className='form-control'
                 />
             </div>
-            <button className="btn btn-primary">Add Task</button>
+            <button className="btn btn-dark mt-2">Add Task</button>
         </form>
     );
 };
